@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-bar {
+            height: 80px;
+            background-color: red;
+        }
+
+        .pannel-container {
+            flex: auto;
+            background-color: yellow;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pannel {
+            margin: 10px;
+            display: none;
+            height: 100%;
+        }
+        .pannel.visible {
+            display: block;
+        }
+        
+        .green {
+            background-color: green;
+        }
+        .blue {
+            background-color: blue;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="tab-bar"></div>
+        <div class="pannel-container">
+            <div class="pannel green">1</div>
+            <div class="pannel visible blue">2</div>
+        </div>
+    </div>
+</body>
+
+</html>

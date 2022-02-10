@@ -1,3 +1,44 @@
-.header {
-  color: red;
+// html,
+// body {
+//   height: 100vh;
+// }
+
+body {
+  overflow: hidden;
+  margin: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.tab-bar {
+  min-height: 50px;
+  display: flex;
+}
+
+.tab.selected {
+  background-color: yellow;
+}
+
+.window-container {
+  flex: auto;
+  margin: 10px;
+  height: auto;
+}
+
+.window {
+  height: 100%;
+  width: 100%;  
+}
+
+.panel {
+  height: 100%;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
 }
