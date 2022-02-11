@@ -14,12 +14,12 @@ const App: Component = () => {
     <div class='app-container'>
       <div class='tab-bar'>
         <For each={tabs()}>{(tab, index) =>
-          <button class='tab'
+          <div class='tab'
             classList={{
               selected: tab == activeTab(),
             }}
             onClick={() => { setActiveTab(tab) }}
-          >{tab.slice(0, 8)}</button>
+          >{tab.slice(0, 8)}</div>
         }</For>
         <button
           onClick={() => {

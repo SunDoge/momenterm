@@ -38,7 +38,7 @@ fn new_terminal(
   cols: u16,
   window: Window,
   state: State<'_, TerminalDatabase>,
-) -> String {
+) {
   let pty_system = native_pty_system();
   let pair = pty_system
     .openpty(PtySize {
@@ -51,7 +51,7 @@ fn new_terminal(
 
   let cmd = CommandBuilder::new(shell);
 
-  let child = pair
+  let _child = pair
     .slave
     .spawn_command(cmd)
     .expect("fail to spawn command");
@@ -65,8 +65,7 @@ fn new_terminal(
     .try_clone_writer()
     .expect("fail to clone writer");
 
-  let event_name = format!("terminal/{}", uuid);
-  let event_name_cloned = event_name.clone();
+  let uuid_cloned = uuid.clone();
   std::thread::spawn(move || {
     let mut buf = vec![0u8; 1024];
 
@@ -75,19 +74,21 @@ fn new_terminal(
         break;
       }
 
-      window.emit(
-        &event_name_cloned,
-        Payload {
-          message: buf[..len].to_vec(),
-        },
-      );
+      window
+        .emit(
+          &uuid_cloned,
+          Payload {
+            message: buf[..len].to_vec(),
+          },
+        )
+        .expect("fail to emit message");
     }
   });
 
   let (sender, receiver) = std::sync::mpsc::channel::<String>();
   std::thread::spawn(move || {
     while let Ok(v) = receiver.recv() {
-      writer.write(v.as_bytes());
+      writer.write(v.as_bytes()).expect("fail to write data");
     }
   });
 
@@ -96,9 +97,7 @@ fn new_terminal(
   {
     let mut db = state.0.lock().unwrap();
     db.insert(terminal.uuid.clone(), terminal);
-  }
-
-  event_name
+  };
 }
 
 #[tauri::command]
@@ -107,7 +106,7 @@ fn send_data(uuid: String, data: String, state: State<'_, TerminalDatabase>) {
   {
     let db = state.0.lock().unwrap();
     if let Some(terminal) = db.get(&uuid) {
-      terminal.sender.send(data);
+      terminal.sender.send(data).expect("fail to send data");
     }
   }
 }

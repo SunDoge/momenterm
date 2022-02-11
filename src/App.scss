@@ -15,23 +15,41 @@ body {
 }
 
 .tab-bar {
-  min-height: 50px;
+  min-height: 40px;
   display: flex;
+  // background-color: #ccc;
+}
+
+.tab {
+  flex-grow: 1;
+  // background-color: #fff;
+  flex: auto;
+  // text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
 }
 
 .tab.selected {
-  background-color: yellow;
+  border-bottom-color: cyan;
+  border-bottom-width: 3px;
 }
 
 .window-container {
   flex: auto;
-  margin: 10px;
-  height: auto;
+  // margin: 10px;
+  height: 100%;
+  min-height: 0;
+  // min-width: 0;
+  // flex-shrink: 2;
 }
 
 .window {
   height: 100%;
-  width: 100%;  
+  width: 100%;
 }
 
 .panel {
